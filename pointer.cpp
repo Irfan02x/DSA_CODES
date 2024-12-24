@@ -1,25 +1,49 @@
-// C++ program to illustrate Pointers
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <stack> 
 using namespace std;
-int geeks(int a)
-{
-    int var = 20;
 
-    // declare pointer variable
-    int* ptr;
-    
-    // note that data type of ptr and var must be same
-     ptr = &a;
+class MinStack {
+private:
+    std::stack<int> stack;   
+    std::stack<int> minStack; 
 
-    // assign the address of a variable to a pointer
-    cout << "Value at ptr = " << ptr << "\n";
-    cout << "Value at var = " << var << "\n";
-    cout << "Value at *ptr = " << *ptr << "\n";
-}
-// Driver program
-int main() 
-{  //int a=10
-int a=  geeks(10); 
-  return 0;
+public:
+    MinStack() {}
+
+    void push(int val) {
+        stack.push(val);
+        if (minStack.empty() || val <= minStack.top()) {
+            minStack.push(val);
+        }
+    }
+
+    void pop() {
+        int val = stack.top();
+        stack.pop();
+        if (val == minStack.top()) {
+            minStack.pop();
+        }
+    }
+
+    int top() {
+        return stack.top();
+    }
+
+    int getMin() {
+        return minStack.top();
+    }
+};
+
+int main() {
+    MinStack minStack;
+    minStack.push(5);
+    minStack.push(3);
+    minStack.push(7);
+    cout << "Min: " << minStack.getMin() << endl;
+    minStack.pop();
+    cout << "Min: " << minStack.getMin() << endl;
+    minStack.pop();
+    cout << "Min: " << minStack.getMin() << endl;
+
+    return 0;
 }
